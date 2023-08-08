@@ -19,6 +19,9 @@ public class PlayerMain : MonoBehaviour
     private float dirX = 0f;
   
 
+    private enum MovementState { idle, running, jumping, falling}
+    private MovementState state = MovementState.idle;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -72,19 +75,31 @@ public class PlayerMain : MonoBehaviour
     }
     private void UpdateAnimation()
     {
+
+        MovementState state;
+
         if (dirX > 0f)
         {
-            anim.SetBool("running", true);
+            state = MovementState.running;
             rd.flipX = false;
         }
         else if (dirX < 0f)
         {
-            anim.SetBool("running", true);
+            state = MovementState.running;
             rd.flipX = true;
         } else
         {
-            anim.SetBool("running", false);
+            state = MovementState.idle;
         }
+        if (rb.velocity.y > .1f)
+        {
+            state = MovementState.jumping;
+        } else if ( rb.velocity.y < -.1f)
+        {
+            state = MovementState.falling;
+        }
+
+        anim.SetInteger("state", (int)state);
         
     }
 

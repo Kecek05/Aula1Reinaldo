@@ -10,6 +10,8 @@ public class PlayerMain : MonoBehaviour
     private SpriteRenderer rd;
     private Animator anim;
 
+    private bool doubleJump;
+
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpForce;
     [SerializeField] private LayerMask jumpableGround;
@@ -31,10 +33,16 @@ public class PlayerMain : MonoBehaviour
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
-
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        if (isGrounded() && !Input.GetButton("Jump"))
         {
+            doubleJump = false;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            if (isGrounded() || doubleJump)
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            doubleJump = !doubleJump;
         }
 
         if (Input.GetKeyDown(KeyCode.I))

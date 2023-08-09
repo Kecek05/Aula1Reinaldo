@@ -42,6 +42,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: background
+    uniqueID: 2144464147
+    locked: 0
+  - name: cenario
+    uniqueID: 460386737
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: terrain
+    uniqueID: 1459872707
     locked: 0
